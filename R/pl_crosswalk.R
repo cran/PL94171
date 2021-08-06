@@ -10,8 +10,12 @@
 #' @return A tibble, with two sets of GEOIDs and overlap information.
 #'
 #' @examples
+#' \donttest{
+#' # Takes a bit of time to run
 #' pl_crosswalk("RI", 2010, 2020)
+#' }
 #'
+#' @concept advanced
 #' @export
 pl_crosswalk = function(abbr, from_year=2010L, to_year=from_year + 10L) {
     fips = tigris::fips_codes$state_code[match(abbr, tigris::fips_codes$state)]
@@ -32,10 +36,10 @@ pl_crosswalk = function(abbr, from_year=2010L, to_year=from_year + 10L) {
                        "TAB{yr_1}_TAB{yr_2}_ST{fips}.zip")
     }
 
-    zip_path = withr::local_tempfile(file="baf")
+    zip_path = withr::local_tempfile(fileext = "baf")
     download_census(url = url, path = zip_path)
     withr::deferred_clear()
-    cw_d = readr::read_delim(zip_path, delim="|", col_types="cccdlddcdccdlddcdd",
+    cw_d = readr::read_delim(zip_path, delim="|", col_types="cccclddccccdlddcdd",
                              progress=interactive())
     cw_d %>%
         rename_with(~ str_c(str_sub(., 0, -5), "fr"), ends_with(as.character(from_year))) %>%
@@ -86,6 +90,7 @@ is_const_rel = function(x) {
 #' pl_retally(RI_2010, crosswalk)
 #' }
 #'
+#' @concept advanced
 #' @export
 pl_retally = function(d_from, crosswalk) {
     if (inherits(d_from, "sf")) {

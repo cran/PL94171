@@ -4,7 +4,7 @@
 \alias{pl_tidy_shp}
 \title{All-in-one Shapefile Function}
 \usage{
-pl_tidy_shp(abbr, path, year = 2020, ...)
+pl_tidy_shp(abbr, path, year = 2020, type = c("blocks", "vtds"), ...)
 }
 \arguments{
 \item{abbr}{The state to make the shapefile for}
@@ -13,6 +13,9 @@ pl_tidy_shp(abbr, path, year = 2020, ...)
 
 \item{year}{The year to download the block geography for. Should match the
 year of the PL files.}
+
+\item{type}{If \code{"blocks"}, make a Census block shapefile; if \code{"vtds"} make a
+VTD shapefile.}
 
 \item{...}{passed on to \code{\link[dplyr:filter]{dplyr::filter()}}; use to subset to a certain county,
 for example.}
@@ -26,8 +29,9 @@ Downloads block geography and merges with the cleaned PL 94-171 file.
 }
 \examples{
 \donttest{
-pl_ex_path <- system.file('extdata/ri2018_2020Style.pl', package = 'PL94171')
+pl_ex_path <- system.file("extdata/ri2018_2020Style.pl", package = "PL94171")
 pl_tidy_shp("RI", pl_ex_path)
 }
 
 }
+\concept{basic}

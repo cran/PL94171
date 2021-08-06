@@ -23,6 +23,7 @@
 #' pl_get_baf("RI")
 #' pl_get_baf("RI", "VTD")
 #'
+#' @concept advanced
 #' @export
 pl_get_baf = function(abbr, geographies=NULL, cache_to=NULL, refresh=FALSE) {
     if (!is.null(cache_to) && file.exists(cache_to) && !refresh) {
@@ -34,11 +35,11 @@ pl_get_baf = function(abbr, geographies=NULL, cache_to=NULL, refresh=FALSE) {
     base_name = str_glue("BlockAssign_ST{fips}_{abbr}")
 
     zip_url = str_glue("https://www2.census.gov/geo/docs/maps-data/data/baf2020/{base_name}.zip")
-    zip_path = withr::local_tempfile(file="baf")
+    zip_path = withr::local_tempfile(fileext ="baf")
     zip_dir = dirname(zip_path)
     download_census(zip_url, zip_path)
 
-    files = utils::unzip(zip_path, list=T)$Name
+    files = utils::unzip(zip_path, list=TRUE)$Name
     utils::unzip(zip_path, exdir=zip_dir)
     out = list()
     for (fname in files) {
@@ -46,7 +47,7 @@ pl_get_baf = function(abbr, geographies=NULL, cache_to=NULL, refresh=FALSE) {
         if (!is.null(geographies) && !(geogr %in% geographies)) next
         table = readr::read_delim(file.path(zip_dir, fname), delim="|",
                                   col_types=readr::cols(.default="c"),
-                                  progress=interactive())
+                                  progress=interactive(), lazy = FALSE)
         # check final column is not all NA
         if (!all(is.na(table[[ncol(table)]]))) {
             out[[geogr]] = table
