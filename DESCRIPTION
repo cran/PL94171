@@ -1,7 +1,7 @@
 Package: PL94171
 Type: Package
 Title: Tabulate P.L. 94-171 Redistricting Data Summary Files
-Version: 0.3.2
+Version: 1.0.1
 Authors@R: c(
     person("Cory", "McCartan", email = "cmccartan@g.harvard.edu", role = c("aut", "cre")),
     person("Christopher T.", "Kenny", email = "christopherkenny@fas.harvard.edu", role = "aut"))
@@ -15,15 +15,16 @@ Suggests: testthat (>= 3.0.0), lifecycle, knitr, rmarkdown, ggplot2
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 URL: https://corymccartan.github.io/PL94171/,
         https://github.com/CoryMcCartan/PL94171/
 BugReports: https://github.com/CoryMcCartan/PL94171/issues
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Language: en-US
 NeedsCompilation: no
-Packaged: 2021-08-06 17:26:30 UTC; chris
+Packaged: 2021-11-18 19:21:58 UTC; cmccartan
 Author: Cory McCartan [aut, cre],
   Christopher T. Kenny [aut]
 Repository: CRAN
-Date/Publication: 2021-08-06 19:20:02 UTC
+Date/Publication: 2021-11-18 19:40:02 UTC

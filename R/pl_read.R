@@ -16,8 +16,10 @@
 #' @return A list of data frames containing the four PL files.
 #'
 #' @examples
+#' \donttest{
 #' pl_ex_path <- system.file('extdata/ri2018_2020Style.pl', package = 'PL94171')
 #' pl <- pl_read(pl_ex_path)
+#' }
 #' # or try `pl_read(pl_url("RI", 2010))`
 #'
 #' @concept basic
@@ -113,9 +115,6 @@ pl_url = function(abbr, year=2010) {
         url = str_glue("https://www2.census.gov/census_2010/01-Redistricting_File--PL_94-171/",
                        "{name}/{tolower(abbr)}2010.pl.zip")
     } else if (year == 2020) {
-        warning("2020 P.L. 94-171 files have not been released yet.\n",
-             "Download Rhode Island prototype data at\n",
-             "<https://www2.census.gov/programs-surveys/decennial/rdo/datasets/2018/ri2018_2020Style.pl.zip>")
         url = str_glue("https://www2.census.gov/programs-surveys/decennial/2020/data/",
                        "01-Redistricting_File--PL_94-171/{name}/{tolower(abbr)}2020.pl.zip")
     }
