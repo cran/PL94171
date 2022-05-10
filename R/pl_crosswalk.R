@@ -37,7 +37,12 @@ pl_crosswalk = function(abbr, from_year=2010L, to_year=from_year + 10L) {
     }
 
     zip_path = withr::local_tempfile(fileext = "baf")
-    download_census(url = url, path = zip_path)
+    success = download_census(url, zip_path)
+    if (!success) {
+        message("Download did not succeed. Try again.")
+        return(NULL)
+    }
+
     withr::deferred_clear()
     if (yr_2 == "2010") {
         cw_d = readr::read_delim(zip_path, skip = 0, delim = ",", col_types = "cccclddccccdlddcdc")
@@ -66,7 +71,10 @@ pl_crosswalk = function(abbr, from_year=2010L, to_year=from_year + 10L) {
 
 # checks if x is constant
 is_const_rel = function(x) {
-    !is.numeric(x) & length(unique(x))
+    if (is.numeric(x))
+        FALSE
+    else
+        dplyr::n_distinct(x) == 1
 }
 
 #' Approximately re-tally Census data under new block boundaries
@@ -102,21 +110,52 @@ pl_retally = function(d_from, crosswalk) {
     if (inherits(d_from, "sf")) {
         d_from = sf::st_drop_geometry(d_from)
     }
-    fips = str_sub(d_from$GEOID, 1, 2)[1]
+    fips = str_sub(d_from$GEOID[1], 1, 2)
 
-    d_from %>%
+    crosswalk = filter(crosswalk,
+                       str_starts(.data$GEOID_to, fips),
+                       str_starts(.data$GEOID, fips))
+
+    d_from = d_from %>%
         select(-dplyr::any_of(c("area_water", "area_land"))) %>%
         full_join(crosswalk, by="GEOID") %>%
-        filter(str_sub(.data$GEOID_to, 1, 2) == fips) %>%
         mutate(GEOID=.data$GEOID_to) %>%
         select(-.data$GEOID_to) %>%
-        group_by(.data$GEOID) %>%
-        summarize(across(where(is_const_rel), ~ .[1]),
-                  area_land = .data$area_land[1],
-                  area_water = .data$area_water[1],
-                  across(where(is.integer), ~ as.integer(round(sum(.data$int_land * .)))),
-                  across(c(where(is.double), -.data$int_land,
-                           -.data$area_land, -.data$area_water),
-                         ~ sum(.data$int_land * .))) %>%
-        ungroup()
+        group_by(.data$GEOID)
+
+    grp_data = dplyr::group_data(d_from)
+    out = tibble(GEOID = grp_data$GEOID)
+    grp_sizes = lengths(grp_data$.rows)
+    grp_idx1 = vapply(grp_data$.rows, function(x) x[1], integer(1)) # first index of each group
+
+    const_col = which(vapply(d_from, is_const_rel, logical(1)))
+    for (i in names(const_col)) {
+        out[[i]] = d_from[[i]][grp_idx1]
+    }
+    out$area_land = d_from$area_land[grp_idx1]
+    out$area_water = d_from$area_water[grp_idx1]
+
+    area_cols = which(names(d_from) %in% c("area_land", "area_water", "int_land"))
+    int_cols = which(vapply(d_from, is.integer, logical(1)))
+    dbl_cols = setdiff(which(vapply(d_from, is.double, logical(1))), area_cols)
+
+    d_int = t(d_from$int_land * as.matrix(d_from[, int_cols, drop=FALSE]))
+    d_int = do.call(cbind, lapply(grp_data$.rows, function(idx) {
+        as.integer(round(
+            if (length(idx) == 1) d_int[, idx] else rowSums(d_int[, idx, drop=FALSE])
+        ))
+    }))
+    d_int = t(d_int)
+    colnames(d_int) = names(int_cols)
+
+    d_dbl = t(d_from$int_land * as.matrix(d_from[, dbl_cols, drop=FALSE]))
+    d_dbl = do.call(cbind, lapply(grp_data$.rows, function(idx) {
+        as.integer(round(
+            if (length(idx) == 1) d_dbl[, idx] else rowSums(d_dbl[, idx, drop=FALSE])
+        ))
+    }))
+    d_dbl = t(d_dbl)
+    colnames(d_dbl) = names(dbl_cols)
+
+    dplyr::bind_cols(out, d_int, d_dbl)
 }
