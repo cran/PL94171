@@ -3,6 +3,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(tinytiger.curl_quiet=TRUE)
 
 ## ----setup, message=F, warning=F----------------------------------------------
 library(PL94171)
@@ -28,12 +29,12 @@ pl <- pl_select_standard(pl, clean_names = TRUE)
 print(pl)
 
 ## ----message=F, warning=F-----------------------------------------------------
-library(tigris)
+library(tinytiger)
 library(sf)
 library(dplyr)
 library(ggplot2)
 
-ri_tracts = tracts("RI", county="Providence", year=2020, progress_bar=FALSE)
+ri_tracts = tt_tracts("RI", county="Providence", year=2020)
 
 full_join(pl, ri_tracts, by="GEOID") %>%
 ggplot(aes(fill=pop, geometry=geometry)) +
