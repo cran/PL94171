@@ -1,4 +1,4 @@
-e979096273c8d13f8f63f7f790e943e9 *DESCRIPTION
+0f72a141e586dd38a82c1e3c4d2d1f69 *DESCRIPTION
 10a99b7ec82a321163db18744f3e9be8 *LICENSE
 6efbfdf5d15d7bf6aa2d8c0c801ad530 *NAMESPACE
 672e3778740015e099cbd79013c31b3b *NEWS.md
@@ -16,12 +16,12 @@ ab6ffd681009b40a7139dfd6bcc60295 *R/PL94171-package.R
 007582ef5dbd2363cddb2801c7cb8a0f *R/pl_tidy_shp.R
 2bb9ea3fa5d1d77337c185c62c23e1e9 *R/sysdata.rda
 2f08797cd29849ed72f0cf2d734bcaaa *R/utils.R
-75273c8caede328a5e1f6bf0d79f9015 *README.md
+77df39927daf65f913dc91f4c0ceb33f *README.md
 ac40ad74f54d87793280aba25263beba *build/vignette.rds
 e5a0c09a0f26218f894c1a37b997237c *data/pl_ex.rda
-4dbbfc7d97299b233914a57971d7444c *inst/doc/PL94171.R
-69cc9decbef48077304beae8dd34ee38 *inst/doc/PL94171.Rmd
-3279065baafa0353e05c2b1fa15c5165 *inst/doc/PL94171.html
+81c496e32358c1fb10614d84f885df83 *inst/doc/PL94171.R
+37d16b6ddb21a93fea4dc91436f04a0b *inst/doc/PL94171.Rmd
+eeb7b797b52ce22774f6b4ab4b9be1c0 *inst/doc/PL94171.html
 5c90893c6e0b12a5aabe11169942cb51 *inst/extdata/ri2018_2020Style.pl/ri000012018_2020Style.pl
 3a75d2b0c0e80544632ec5e3a4df7aff *inst/extdata/ri2018_2020Style.pl/ri000022018_2020Style.pl
 45b803a4fd17fe5ac5cc3091f8739a01 *inst/extdata/ri2018_2020Style.pl/ri000032018_2020Style.pl
@@ -57,4 +57,4 @@ ef6fe27b6851893dab2001c11fac2fc2 *tests/testthat/test-select.R
 d0d7e4e1852bcfaf54de48e4dbe6d56d *tests/testthat/test-shp.R
 44f686a0c98aef8a8de3a038d8377a97 *tests/testthat/test-subset.R
 17ea1fa4321bdf5723df9f14abe34812 *tests/testthat/test-urls.R
-69cc9decbef48077304beae8dd34ee38 *vignettes/PL94171.Rmd
+37d16b6ddb21a93fea4dc91436f04a0b *vignettes/PL94171.Rmd
