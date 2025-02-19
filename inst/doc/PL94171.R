@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -29,14 +29,14 @@ pl <- pl_select_standard(pl, clean_names = TRUE)
 print(pl)
 
 ## ----message=F, warning=F, eval = FALSE---------------------------------------
-#  library(tinytiger)
-#  library(sf)
-#  library(dplyr)
-#  library(ggplot2)
-#  
-#  ri_tracts = tt_tracts("RI", county="Providence", year=2020)
+# library(tinytiger)
+# library(sf)
+# library(dplyr)
+# library(ggplot2)
+# 
+# ri_tracts = tt_tracts("RI", county="Providence", year=2020)
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 library(tinytiger)
 library(sf)
 library(dplyr)
@@ -55,7 +55,7 @@ with_retry <- function(fn, ..., max_iter = 5) {
 
 ri_tracts = with_retry(fn = tt_tracts, state = "RI", county = "Providence", year = 2020)
 
-## ---- eval = !is.null(ri_tracts)----------------------------------------------
+## ----eval = !is.null(ri_tracts)-----------------------------------------------
 full_join(pl, ri_tracts, by="GEOID") %>%
 ggplot(aes(fill=pop, geometry=geometry)) +
     geom_sf(size=0) +
