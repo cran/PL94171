@@ -24,7 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Christopher T. Kenny \email{christopherkenny@fas.harvard.edu}
+  \item Christopher T. Kenny \email{christopherkenny@fas.harvard.edu} (\href{https://orcid.org/0000-0002-9386-6860}{ORCID})
 }
 
 }

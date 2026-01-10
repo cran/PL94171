@@ -50,7 +50,7 @@ So the basic process for working with legacy P.L. 94-171 data is:
 
 The utility function `pl_tidy_shp()` combines all of these steps into one
 function for most common use case of tabulating basic redistricting information
-at the block level. This is demonstrated in [the README](../index.html)
+at the block level. This is demonstrated in the README.
 
 # Using the `PL94171` package
 

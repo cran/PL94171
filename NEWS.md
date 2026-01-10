@@ -1,3 +1,10 @@
+# PL94171 1.2.1
+* Fix relative link in vignette
+
+# PL94171 1.2.0
+* Adds support for 1990 data in `pl_url()` and `pl_read()`.
+* Fixes an error where repeatedly downloading and reading data in the same session would fail due to overuse of the same temporary file directory.
+
 # PL94171 1.1.3
 * Update documentation to fix NOTEs on CRAN
 
